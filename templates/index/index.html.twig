@@ -1,0 +1,61 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Hello IndexController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code>C:/Users/DEBROIZE/menu/src/Controller/IndexController.php</code></li>
+        <li>Your template at <code>C:/Users/DEBROIZE/menu/templates/index/index.html.twig</code></li>
+    </ul>
+</div>
+
+
+{% block menu %}
+<section id="menu" class="menu section">
+    <div class="container section-title" data-aos="fade-up">
+        <h2>Menu</h2>
+        <p>Découvrez notre carte</p>
+    </div>
+
+    <div class="container isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+        <div class="row" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-lg-12 d-flex justify-content-center">
+                <ul class="menu-filters isotope-filters">
+                    <li data-filter="*" class="filter-active">Tous les plats</li>
+                    {% for categorie in categories %}
+                        <li data-filter=".filter-{{ categorie.libelle|lower|replace({' ': '-'}) }}">{{ categorie.nom }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200">
+            {% for categorie in categories %}
+                {% for plat in categorie.plats %}
+                    <div class="col-lg-6 menu-item isotope-item filter-{{ categorie.libelle|lower|replace({' ': '-'}) }}">
+                        {% if plat.image %}
+                            <img src="{{ asset('uploads/plats/' ~ plat.image) }}" class="menu-img" alt="{{ plat.libelle }}">
+                        {% endif %}
+                        <div class="menu-content">
+                            <a href="#">{{ plat.libelle }}</a><span>{{ plat.prix }}€</span>
+                        </div>
+                        <div class="menu-ingredients">
+                            {{ plat.description }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% endblock %}
