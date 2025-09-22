@@ -17,45 +17,63 @@
         <li>Your template at <code>C:/Users/DEBROIZE/menu/templates/index/index.html.twig</code></li>
     </ul>
 </div>
-
+{% endblock %}
 
 {% block menu %}
-<section id="menu" class="menu section">
-    <div class="container section-title" data-aos="fade-up">
-        <h2>Menu</h2>
-        <p>Découvrez notre carte</p>
-    </div>
 
     <div class="container isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
         <div class="row" data-aos="fade-up" data-aos-delay="100">
-            <div class="col-lg-12 d-flex justify-content-center">
-                <ul class="menu-filters isotope-filters">
-                    <li data-filter="*" class="filter-active">Tous les plats</li>
-                    {% for categorie in categories %}
-                        <li data-filter=".filter-{{ categorie.libelle|lower|replace({' ': '-'}) }}">{{ categorie.nom }}</li>
+          <div class="col-lg-12 d-flex justify-content-center">
+            <ul class="menu-filters isotope-filters">
+              <li data-filter="*" class="filter-active">All</li>
+           {% for categorie in categories %}
+                        <li data-filter=".filter-{{ categorie.nom|lower|replace({' ': '-'}) }}">{{ categorie.nom }}</li>
                     {% endfor %}
-                </ul>
-            </div>
-        </div>
+            </ul>
+          </div>
+        </div><!-- Menu Filters -->
 
         <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200">
-            {% for categorie in categories %}
-                {% for plat in categorie.plats %}
-                    <div class="col-lg-6 menu-item isotope-item filter-{{ categorie.libelle|lower|replace({' ': '-'}) }}">
-                        {% if plat.image %}
-                            <img src="{{ asset('uploads/plats/' ~ plat.image) }}" class="menu-img" alt="{{ plat.libelle }}">
-                        {% endif %}
-                        <div class="menu-content">
-                            <a href="#">{{ plat.libelle }}</a><span>{{ plat.prix }}€</span>
-                        </div>
-                        <div class="menu-ingredients">
-                            {{ plat.description }}
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endfor %}
-        </div>
+
+          <div class="col-lg-6 menu-item isotope-item filter-starters">
+            <img src="{{asset('assets/img/menu/lobster-bisque.jpg')}}" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#">Lobster Bisque</a><span>$5.95</span>
+            </div>
+            <div class="menu-ingredients">
+              Lorem, deren, trataro, filede, nerada
+            </div>
+          </div><!-- Menu Item -->
+
+        </div><!-- Menu Container -->
+
+        <div class="col-lg-6 menu-item isotope-item filter-starters">
+            <img src="{{asset('assets/img/menu/cake.jpg')}}" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#">Crab Cake</a><span>$7.95</span>
+            </div>
+            <div class="menu-ingredients">
+              A delicate crab cake served on a toasted roll with lettuce and tartar sauce
+            </div>
+           
+          </div><!-- Menu Item -->
+ 
+         
+ 
+          <div class="col-lg-6 menu-item isotope-item filter-salads">
+            <img src="{{asset('assets/img/menu/caesar.jpg')}}" class="menu-img" alt="">
+           
+            <div class="menu-content">
+              <a href="#">Caesar Selections</a><span>$8.95</span>
+            </div>
+            <div class="menu-ingredients">
+              Lorem, deren, trataro, filede, nerada
+            </div>
+          </div><!-- Menu Item -->
+
     </div>
-</section>
-{% endblock %}
+
+
+
+
 {% endblock %}
