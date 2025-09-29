@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Plat;
-use App\Form\PlatType;
+use App\Form\Plat1Type;
 use App\Repository\PlatRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +26,7 @@ final class PlatController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $plat = new Plat();
-        $form = $this->createForm(PlatType::class, $plat);
+        $form = $this->createForm(Plat1Type::class, $plat);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -53,7 +53,7 @@ final class PlatController extends AbstractController
     #[Route('/{id}/edit', name: 'app_plat_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Plat $plat, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(PlatType::class, $plat);
+        $form = $this->createForm(Plat1Type::class, $plat);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -77,5 +77,17 @@ final class PlatController extends AbstractController
         }
 
         return $this->redirectToRoute('app_plat_index', [], Response::HTTP_SEE_OTHER);
+    }
+    
+    #[Route('/detail/{slug}', name: 'app_plat_detail', methods: ['GET'])]
+    public function detail(string $slug, EntityManagerInterface $entityManager): Response
+    {
+        $plat = $entityManager
+            ->getRepository(Plat::class)
+            ->findOneBy(['slug' => $slug]);
+
+        return $this->render('plat/detail.html.twig', [
+            'plat' => $plat,
+        ]);
     }
 }

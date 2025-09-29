@@ -34,42 +34,21 @@
         </div><!-- Menu Filters -->
 
         <div class="row isotope-container" data-aos="fade-up" data-aos-delay="200">
-
-          <div class="col-lg-6 menu-item isotope-item filter-starters">
+          {% for categorie in categories %}
+          {% for plat in categorie.repas %}
+          <div class="col-lg-6 menu-item isotope-item filter-{{ categorie.nom|lower|replace({' ': '-'}) }}">
             <img src="{{asset('assets/img/menu/lobster-bisque.jpg')}}" class="menu-img" alt="">
             <div class="menu-content">
-              <a href="#">Lobster Bisque</a><span>$5.95</span>
+              <a href="{{ path('app_plat_detail', {'slug': plat.slug}) }}">{{ plat.nom }}</a><span>{{ plat.prix }} €</span>
             </div>
             <div class="menu-ingredients">
-              Lorem, deren, trataro, filede, nerada
+              {{ plat.description }}
             </div>
           </div><!-- Menu Item -->
-
+          {% endfor %}
+          {% endfor %}
         </div><!-- Menu Container -->
 
-        <div class="col-lg-6 menu-item isotope-item filter-starters">
-            <img src="{{asset('assets/img/menu/cake.jpg')}}" class="menu-img" alt="">
-            <div class="menu-content">
-              <a href="#">Crab Cake</a><span>$7.95</span>
-            </div>
-            <div class="menu-ingredients">
-              A delicate crab cake served on a toasted roll with lettuce and tartar sauce
-            </div>
-           
-          </div><!-- Menu Item -->
- 
-         
- 
-          <div class="col-lg-6 menu-item isotope-item filter-salads">
-            <img src="{{asset('assets/img/menu/caesar.jpg')}}" class="menu-img" alt="">
-           
-            <div class="menu-content">
-              <a href="#">Caesar Selections</a><span>$8.95</span>
-            </div>
-            <div class="menu-ingredients">
-              Lorem, deren, trataro, filede, nerada
-            </div>
-          </div><!-- Menu Item -->
 
     </div>
 

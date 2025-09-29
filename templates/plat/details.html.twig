@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% include ('header.html.twig') %}
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{% block title %}Détail du plat {% endblock %}</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+
+  <!-- =======================================================
+  * Template Name: Restaurantly
+  * Template URL: https://bootstrapmade.com/restaurantly-restaurant-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{asset('assets/img/menu/lobster-bisque.jpg')}}" class="img-fluid rounded" alt="{{ plat.nom }}">
+        </div>
+        <div class="col-md-6">
+            <h1>{{ plat.nom }}</h1>
+            <div class="category mb-3">
+                <strong>Catégorie:</strong> {{ plat.macategorie.nom }}
+            </div>
+            <div class="price mb-3">
+                <strong>Prix:</strong> {{ plat.prix }} €
+            </div>
+            <div class="description">
+                <strong>Description:</strong>
+                <p>{{ plat.description }}</p>
+            </div>
+            <div class="mt-4">
+                <a href="{{ path('app_plat_index') }}" class="btn btn-secondary">Retour à la liste des plats</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% include ('footer.html.twig') %}
+{% endblock %}
