@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PersonneRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PersonneRepository::class)]
@@ -25,6 +27,17 @@ class Personne
     #[ORM\ManyToOne(inversedBy: 'Personne')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Table $tables = null;
+
+    /**
+     * @var Collection<int, Avis>
+     */
+    #[ORM\OneToMany(targetEntity: Avis::class, mappedBy: 'MesAvis')]
+    private Collection $laPersonne;
+
+    public function __construct()
+    {
+        $this->laPersonne = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +88,36 @@ class Personne
     public function setTables(?Table $tables): static
     {
         $this->tables = $tables;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Avis>
+     */
+    public function getLaPersonne(): Collection
+    {
+        return $this->laPersonne;
+    }
+
+    public function addLaPersonne(Avis $laPersonne): static
+    {
+        if (!$this->laPersonne->contains($laPersonne)) {
+            $this->laPersonne->add($laPersonne);
+            $laPersonne->setMesAvis($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLaPersonne(Avis $laPersonne): static
+    {
+        if ($this->laPersonne->removeElement($laPersonne)) {
+            // set the owning side to null (unless already changed)
+            if ($laPersonne->getMesAvis() === $this) {
+                $laPersonne->setMesAvis(null);
+            }
+        }
 
         return $this;
     }

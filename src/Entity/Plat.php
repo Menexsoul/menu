@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PlatRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PlatRepository::class)]
@@ -27,6 +29,17 @@ class Plat
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
+
+    /**
+     * @var Collection<int, Avis>
+     */
+    #[ORM\OneToMany(targetEntity: Avis::class, mappedBy: 'LesAvis')]
+    private Collection $LePlat;
+
+    public function __construct()
+    {
+        $this->LePlat = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +102,36 @@ class Plat
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Avis>
+     */
+    public function getLePlat(): Collection
+    {
+        return $this->LePlat;
+    }
+
+    public function addLePlat(Avis $lePlat): static
+    {
+        if (!$this->LePlat->contains($lePlat)) {
+            $this->LePlat->add($lePlat);
+            $lePlat->setLesAvis($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLePlat(Avis $lePlat): static
+    {
+        if ($this->LePlat->removeElement($lePlat)) {
+            // set the owning side to null (unless already changed)
+            if ($lePlat->getLesAvis() === $this) {
+                $lePlat->setLesAvis(null);
+            }
+        }
 
         return $this;
     }

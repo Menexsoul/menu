@@ -1,0 +1,25 @@
+{% extends 'starter-page.html.twig' %}
+
+{% block title %}Bienvenue sur la page Avis{% endblock %}
+
+{% block body %}
+{% for plat in plats %}
+    <h2>{{ plat.nom }}</h2>
+    <p>{{ plat.description }}</p>
+    <p>Prix: {{ plat.prix }} €</p>
+    <hr>
+{% endfor %}
+
+<h2>Ajouter un avis</h2>
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    {{ form_start(form) }}
+        {{ form_row(form.contenu) }}
+        {{ form_row(form.note) }}
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+    {{ form_end(form) }}
+{% else %}
+    <p>Vous devez être connecté pour ajouter un avis.</p>
+{% endif %}
+
+{% endblock %}
+
